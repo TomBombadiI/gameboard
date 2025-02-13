@@ -1,0 +1,17 @@
+[
+    {
+        "player_id": 1,
+        "active_games": null,
+        "completed_games": [
+            10,
+            2
+        ]
+    },
+    {
+        "player_id": 2,
+        "active_games": null,
+        "completed_games": [
+            8
+        ]
+    }
+]

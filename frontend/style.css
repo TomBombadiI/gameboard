@@ -1,0 +1,326 @@
+:root {
+    --bg-color: #F8F8FF;
+    --white-color: #fff;
+    --accent-color: #405cf5;
+    --error-color: #FF0000;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bg-color);
+}
+
+html.nologin * {
+    pointer-events: none;
+}
+
+html.nologin .loginPopup * {
+    pointer-events: all;
+}
+
+.button {
+    appearance: button;
+    backface-visibility: hidden;
+    background-color: var(--accent-color);
+    border-radius: 6px;
+    border: none;
+    box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .1) 0 2px 5px 0, rgba(0, 0, 0, .07) 0 1px 1px 0;
+    color: var(--white-color);
+    cursor: pointer;
+    overflow: hidden;
+    padding: 10px 35px;
+    text-align: center;
+    transform: translateZ(0);
+    transition: all .2s, box-shadow .08s ease-in;
+    touch-action: manipulation;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.button:disabled {
+    cursor: default;
+    opacity: .7;
+}
+
+.button-red {
+    background-color: var(--error-color);
+}
+
+.action-button:focus {
+    box-shadow: rgba(50, 50, 93, .1) 0 0 0 1px inset, rgba(50, 50, 93, .2) 0 6px 15px 0, rgba(0, 0, 0, .1) 0 2px 2px 0, rgba(50, 151, 211, .3) 0 0 0 4px;
+}
+
+.action-button {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.pass-or-drop {
+    position: fixed;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 15px;
+}
+
+.pass-or-drop.hidden {
+    display: none;
+}
+
+.content {
+    padding: 15px 35px;
+}
+
+.content__title {
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.content__body {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    column-gap: 35px;
+}
+
+.content__aside {
+    flex: 0 0 320px;
+    align-self: start;
+
+    background-color: var(--white-color);
+    border-radius: 35px;
+    min-height: 300px;
+    padding: 25px;
+    box-shadow: 0px 2px 8px 0px rgba(34, 60, 80, 0.2);
+
+    position: sticky;
+    top: 15px;
+}
+
+.content__aside-title {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.content__aside-list {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+    font-size: 18px;
+}
+
+.user-top__list {
+    padding-left: 25px;
+}
+
+.user-stat__history-title {
+    margin-top: 25px;
+}
+.user-stat__history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px 0;
+}
+.user-stat__history-item {
+}
+
+.content__gameboard {
+    flex: 1 1 auto;
+}
+
+.gameboard {
+    text-align: center;
+}
+
+.gameboard__body {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 35px 0 70px;
+    counter-reset: gameboard-counter;
+}
+
+.gameboard__cell {
+    --size: 60px;
+
+    width: var(--size);
+    height: var(--size);
+    background-color: var(--white-color);
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    counter-increment: gameboard-counter;
+    position: relative;
+
+    display: grid;
+    grid-template-columns: repeat(var(--count), 1fr);
+    gap: 2px;
+}
+
+.gameboard__cell::before {
+    content: counter(gameboard-counter);
+    /* Выводим номер */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.gameboard__cell span {
+    position: relative;
+    display: flex;
+    font-size: calc(var(--size) / var(--count) - 2px);
+    width: calc(var(--size) / var(--count) - 2px);
+    height: calc(var(--size) / var(--count) - 2px);
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    line-height: calc(var(--size) / var(--count) - 2px);
+}
+
+.popup {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.popup-body p {
+    margin: 0 !important;
+}
+
+.popup-form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+input {
+    padding: 8px 15px;
+    border-radius: 25px;
+    border-color: var(--accent-color);
+    border-width: 4px;
+    font-size: 20px;
+}
+
+input#emoji {
+    cursor: pointer;
+}
+
+.emoji-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    z-index: 5;
+    display: none;
+}
+
+.emoji-window.active {
+    display: block;
+}
+
+.rolling-dice {
+    position: fixed;
+    inset: 0;
+
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, .4);
+}
+
+.rolling-dice.active {
+    display: flex;
+}
+
+.rolling-dice p {
+    font-weight: 700;
+    font-size: 36px;
+    color: var(--white-color);
+    opacity: 0;
+    transition: .3s;
+}
+
+.rolling-dice p.active {
+    opacity: 1;
+}
+
+.rolling-dice img {
+    width: 300px;
+    height: 300px;
+    object-fit: contain;
+}
+
+.rolling-dice button {
+    opacity: 0;
+    pointer-events: none;
+    transition: .3s;
+    margin-top: 15px;
+}
+
+.rolling-dice button.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.roulette-container {
+    width: 300px;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+    margin: 20px auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.roulette {
+    display: flex;
+    gap: 5px;
+    transition: transform 3s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+}
+
+.item {
+    width: 60px;
+    height: 90px;
+    background: lightblue;
+    text-align: center;
+    line-height: 90px;
+    font-size: 40px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.button-logout {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    z-index: 5;
+    cursor: pointer;
+    background-color: var(--error-color);
+    color: var(--white-color);
+    padding: 8px 15px;
+    border-radius: 25px;
+    border-color: var(--error-color);
+}
+
+.cell-red { background-color: #ff4d4d; }
+.cell-yellow { background-color: #ffd966; }
+.cell-green { background-color: #66cc66; }
+.cell-blue { background-color: #66b3ff; }

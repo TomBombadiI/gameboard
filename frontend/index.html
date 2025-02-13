@@ -1,10 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" class="nologin">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Игровое поле</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="normalize.css">
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
+    <main class="content">
+
+        <h1 class="content__title">Лестницы и змейки</h1>
+
+        <div class="content__body">
+
+            <aside class="content__aside content__user-stat user-stat">
+                <h2 class="content__aside-title user-stat__title" id="username">
+                    😀 Имя пользователя
+                </h2>
+                <ul class="content__aside-list user-stat__list">
+                    <li class="user-stat__item">
+                        <strong class="user-stat__item-label">
+                            Текущая игра:
+                        </strong>
+                        <span class="user-stat__item-value" id="currentGame">
+                            -
+                        </span>
+                    </li>
+                    <li class="user-stat__item">
+                        <strong class="user-stat__item-label">
+                            Текущая позиция:
+                        </strong>
+                        <span class="user-stat__item-value" id="currentPosition">
+                            0
+                        </span>
+                    </li>
+                </ul>
+            
+                <!-- Блок статистики ходов -->
+                <h3 class="user-stat__history-title">Статистика ходов</h3>
+                <ul class="user-stat__history-list" id="userHistory">
+                    <li class="user-stat__history-item">Загрузка...</li>
+                </ul>
+            </aside>
+            
+
+            <section class="content__gameboard gameboard">
+                <h2 class="gameboard__title">
+                    Игровая доска
+                </h2>
+                <ol class="gameboard__body" id="gameboard">
+                </ol>
+            </section>
+
+            <aside class="content__aside content__user-top user-top">
+                <h2 class="content__aside-title user-top__title">
+                    Таблица лидеров
+                </h2>
+                <ol class="content__aside-list user-top__list">
+                    <li class="user-top__item">
+                        <span class="user-top__item-name">
+                            😀 Топ 1
+                        </span>
+                        <strong class="user-top__item-points">
+                            (1999)
+                        </strong>
+                    </li>
+                    <li class="user-top__item">
+                        <span class="user-top__item-name">
+                            😀 Топ 1
+                        </span>
+                        <strong class="user-top__item-points">
+                            (1999)
+                        </strong>
+                    </li>
+                    <li class="user-top__item">
+                        <span class="user-top__item-name">
+                            😀 Топ 1
+                        </span>
+                        <strong class="user-top__item-points">
+                            (1999)
+                        </strong>
+                    </li>
+                </ol>
+            </aside>
+
+        </div>
+
+    </main>
+
+    <button type="button" id="rollDiceButton" class="action-button button">🎲 Бросить кубик</button>
+
+    <div class="pass-or-drop hidden">
+        <button type="button" id="passGameButton" class="button">🎮 Прошел игру</button>
+        <button type="button" id="dropGameButton" class="button-red button">🚫 Дропнул игру</button>
+    </div>
+
+    <div class="rolling-dice">
+        <img width="300" height="300" src="./images/dice-game.gif" alt="">
+        <p class="result-wrapper">Результат: <span class="result-value">3</span></p>
+        <button type="button" class="button" id="rollDiceNextButton">Далее</button>
+    </div>
+
+    <button class="button-logout" id="logoutButton">🚪 Выйти</button>
+    
+    <script type="module" src="https://cdn.jsdelivr.net/npm/emoji-picker-element@^1/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@simondmc/popup-js@1.4.3/popup.min.js"></script>
+    <script type="module" src="./script.js"></script>
 </body>
+
 </html>

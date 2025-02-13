@@ -1,0 +1,24 @@
+[
+    {
+        "id": 1,
+        "name": "test1",
+        "emoji": "🙂",
+        "position": 62,
+        "bonus": 0,
+        "penalty": 0,
+        "current_game": null,
+        "status": "completed",
+        "last_dice": 1
+    },
+    {
+        "id": 2,
+        "name": "test3",
+        "emoji": "🙂",
+        "position": 12,
+        "bonus": 0,
+        "penalty": 0,
+        "current_game": null,
+        "status": "completed",
+        "last_dice": 6
+    }
+]

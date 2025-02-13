@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "name": "The Witcher 3: Wild Hunt",
+        "genre": "RPG",
+        "status": "pending"
+    },
+    {
+        "id": 2,
+        "name": "Minecraft",
+        "genre": "Sandbox",
+        "status": "pending"
+    },
+    {
+        "id": 3,
+        "name": "Cyberpunk 2077",
+        "genre": "Action RPG",
+        "status": "pending"
+    },
+    {
+        "id": 4,
+        "name": "Among Us",
+        "genre": "Party",
+        "status": "pending"
+    },
+    {
+        "id": 5,
+        "name": "Fortnite",
+        "genre": "Battle Royale",
+        "status": "pending"
+    },
+    {
+        "id": 6,
+        "name": "League of Legends",
+        "genre": "MOBA",
+        "status": "pending"
+    },
+    {
+        "id": 7,
+        "name": "Valorant",
+        "genre": "Tactical Shooter",
+        "status": "pending"
+    },
+    {
+        "id": 8,
+        "name": "Genshin Impact",
+        "genre": "Action RPG",
+        "status": "pending"
+    },
+    {
+        "id": 9,
+        "name": "Super Mario Odyssey",
+        "genre": "Platformer",
+        "status": "pending"
+    },
+    {
+        "id": 10,
+        "name": "The Legend of Zelda: Breath of the Wild",
+        "genre": "Action Adventure",
+        "status": "pending"
+    }
+]
