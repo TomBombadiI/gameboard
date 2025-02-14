@@ -3,12 +3,12 @@
         "id": 1,
         "name": "test1",
         "emoji": "🙂",
-        "position": 62,
+        "position": 217,
         "bonus": 0,
         "penalty": 0,
-        "current_game": null,
-        "status": "completed",
-        "last_dice": 1
+        "current_game": 5,
+        "status": "playing",
+        "last_dice": 2
     },
     {
         "id": 2,

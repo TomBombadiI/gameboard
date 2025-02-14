@@ -1,0 +1,16 @@
+{
+    "completed": [
+        { "min": 1, "max": 6, "bonus": 0 },
+        { "min": 7, "max": 12, "bonus": 5 },
+        { "min": 13, "max": 25, "bonus": 10 },
+        { "min": 26, "max": 40, "bonus": 20 },
+        { "min": 41, "max": 60, "bonus": 25 },
+        { "min": 61, "max": null, "bonus": 35 }
+    ],
+    "dropped": [
+        { "min": 1, "max": 6, "penalty": -3 },
+        { "min": 7, "max": 12, "penalty": -7 },
+        { "min": 13, "max": 25, "penalty": -12 },
+        { "min": 26, "max": null, "penalty": -20 }
+    ]
+}

@@ -212,7 +212,7 @@ app.post("/complete_game", (req, res) => {
     playerGameEntry.active_games = null;
 
     // Рассчитываем бонусные ходы
-    const bonusMoves = time_spent ? Math.max(Math.floor(time_spent / 2), 1) : 0;
+    const bonusMoves = calculateReward(time_spent, 'completed');
     const pos = player.position;
     player.position += bonusMoves;
 
@@ -251,7 +251,7 @@ app.post("/complete_game", (req, res) => {
 });
 
 app.post("/drop_game", (req, res) => {
-    const { name } = req.body;
+    const { name, time_spent } = req.body;
     if (!name) return res.status(400).json({ error: "Имя игрока обязательно" });
 
     let players = readData("players");
@@ -269,9 +269,14 @@ app.post("/drop_game", (req, res) => {
 
     let currentGame = games.find(g => g.id === player.current_game);
 
+    // Добавляем игру в `completed_games` и очищаем `active_games`
+    playerGameEntry.completed_games.push(player.current_game);
+    playerGameEntry.active_games = null;
+
     // Откатываем позицию назад
+    const penaltyMoves = calculateReward(time_spent, "dropped");
     const pos = player.position;
-    player.position -= player.last_dice;
+    player.position += penaltyMoves;
     player.position = Math.max(player.position, 1); // Не даем уйти в минус
 
     // Удаляем активную игру (не добавляем в `completed_games`)
@@ -337,6 +342,23 @@ app.get("/game_history", (req, res) => {
 
     res.json(playerHistory);
 });
+
+function calculateReward(hours, status) {
+    const rewards = readData("rewards");
+
+    if (!hours || hours < 1) return 0; // Если время некорректное, бонус/штраф = 0
+
+    const category = rewards[status];
+    if (!category) return 0; // Если статус неизвестен
+
+    for (const range of category) {
+        if (hours >= range.min && (range.max === null || hours <= range.max)) {
+            return range.bonus || range.penalty || 0;
+        }
+    }
+
+    return 0;
+}
 
 // Запуск сервера
 app.listen(8080, () => {

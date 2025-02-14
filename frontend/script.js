@@ -1,5 +1,41 @@
 const server = 'http://localhost:8080';
 
+class IntervalTimer {
+    constructor(callback, interval) {
+        var timerId, startTime, remaining = 0;
+        var state = 0; //  0 = idle, 1 = running, 2 = paused, 3= resumed
+
+        this.pause = function () {
+            if (state != 1) return;
+
+            remaining = interval - (new Date() - startTime);
+            window.clearInterval(timerId);
+            state = 2;
+        };
+
+        this.resume = function () {
+            if (state != 2) return;
+
+            state = 3;
+            window.setTimeout(this.timeoutCallback, remaining);
+        };
+
+        this.timeoutCallback = function () {
+            if (state != 3) return;
+
+            callback();
+
+            startTime = new Date();
+            timerId = window.setInterval(callback, interval);
+            state = 1;
+        };
+
+        startTime = new Date();
+        timerId = window.setInterval(callback, interval);
+        state = 1;
+    }
+}
+
 window.player = null;
 let auth = false;
 let gameboard = document.getElementById('gameboard');
@@ -78,11 +114,19 @@ const waitForPopup = setInterval(() => {
 
 const logoutButton = document.querySelector('#logoutButton');
 logoutButton.addEventListener('click', function () {
+    window.loop.pause();
     localStorage.removeItem("playerName");
     location.reload();
 });
 
 rollDiceButton.addEventListener('click', () => {
+    rollDiceHandler();
+});
+
+function rollDiceHandler() {
+    window.loop.pause();
+    refreshRolling();
+
     const rollingDiceImgElement = rollingDiceElement.querySelector('img');
     const resultWrapper = rollingDiceElement.querySelector('.result-wrapper');
     const resultValueElement = rollingDiceElement.querySelector('.result-value');
@@ -128,8 +172,7 @@ rollDiceButton.addEventListener('click', () => {
                             passOrDropWrapper.classList.remove('hidden');
                             currentGame.textContent = rollingData.game.name;
                             currentPosition.textContent = rollingData.newPosition;
-
-
+                            window.loop.resume();
                         });
                 },
             });
@@ -139,9 +182,10 @@ rollDiceButton.addEventListener('click', () => {
         });
 
     }, 1500);
-});
+}
 
 passGameButton.addEventListener('click', async () => {
+    window.loop.pause();
     if (!window.player || !window.player.current_game) return;
 
     const timeSpent = prompt("Сколько часов потратил на игру?");
@@ -159,23 +203,24 @@ passGameButton.addEventListener('click', async () => {
         finishGame();
     }
 
-    updateGameboard();
-    passOrDropGame();
+    rollDiceHandler();
 });
 
 dropGameButton.addEventListener('click', async () => {
     if (!window.player || !window.player.current_game) return;
 
+    const timeSpent = prompt("Сколько часов потратил на игру?");
+    if (timeSpent === null || isNaN(timeSpent) || timeSpent < 0) return;
+
     const response = await fetch(`${server}/drop_game`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: window.player.name })
+        body: JSON.stringify({ name: window.player.name, time_spent: Number(timeSpent) })
     });
 
     const data = await response.json();
-    console.log(data.message);
-    updateGameboard();
-    passOrDropGame();
+
+    rollDiceHandler();
 });
 
 function finishGame() {
@@ -185,10 +230,7 @@ function finishGame() {
     alert('Вы прошли игру!');
 }
 
-function passOrDropGame() {
-    currentGame.textContent = 'Нет игры';
-    passOrDropWrapper.classList.add('hidden');
-    rollDiceButton.hidden = false;
+function refreshRolling() {
     rollingDiceElement.innerHTML = rollingDiceHTML;
     document.querySelector('.randomGamePopup')?.remove();
 }
@@ -225,7 +267,7 @@ async function login(name, emoji) {
             rollDiceButton.hidden = true;
         }
 
-        setInterval(() => {
+        window.loop = new IntervalTimer(() => {
             updateGameboard();
             updateLeaderboard();
             updateUserHistory();
